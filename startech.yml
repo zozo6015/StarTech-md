@@ -1,0 +1,15 @@
+---
+- hosts: haproxy
+  user: root
+  roles:
+    - haproxy
+
+- hosts: backend
+  user: root
+  roles:
+    - ghost
+
+#- hosts: backend
+#  user: root
+#  become: yes
+#  become_user: ghost

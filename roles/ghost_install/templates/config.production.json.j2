@@ -1,0 +1,29 @@
+{
+  "url": "{{ url }}",
+  "server": {
+    "port": {{ ghost_port }},
+    "host": "127.0.0.1"
+  },
+  "database": {
+    "client": "mysql",
+    "connection": {
+      "host": "{{ mysql_db_host }}",
+      "user": "{{ mysql_user }}",
+      "password": "{{ mysql_pass }}",
+      "database": "{{ mysql_db }}"
+    }
+  },
+  "mail": {
+    "transport": "Direct"
+  },
+  "logging": {
+    "transports": [
+      "file",
+      "stdout"
+    ]
+  },
+  "process": "systemd",
+  "paths": {
+    "contentPath": "/var/www/ghost/content"
+  }
+}

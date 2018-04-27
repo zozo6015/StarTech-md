@@ -1,0 +1,79 @@
+---
+- name: install apt-transport-https, sudo
+  apt:
+    name: {{ item }}
+    state: present
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - sudo
+    - whois
+
+- name: adding nodejs apt-key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: adding nodejs apt_repository
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_8.x {{ ansible_lsb.codename }} main
+    filename: nodesource
+    state: present
+
+- name: install nodejs
+  apt:
+    name: nodejs
+    state: present
+- name: generate user password
+  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+  register: newpass
+
+- debug: msg: "The new generated password for login user is: {{ newpass.stdout }}"
+
+- name: get encrypted version of generated password
+  shell: mkpasswd -m sha-512 -s {{ newpass.stdout }}
+  register: enc_pass
+
+- name: create ghost account
+  user:
+    name: zozo
+    comment: Keresztes Peter-Zoltan
+    shell: /bin/bash
+    groups: sudo
+    password: {{ enc_pass.stdout }}
+
+- name: create .ssh folder under the ghost account
+  file:
+    path: /home/zozo/.ssh
+    owner: zozo
+    group: zozo
+    mode: 0700
+    state: directory
+
+- name: create authorized_keys for ghost user
+  file:
+    path: /home/zozo/.ssh/authorized_keys
+    owner: zozo
+    group: zozo
+    mode: 0600
+    state: touch
+
+- name: copy ssh-keys inside the authorized_keys
+  lineinfile:
+    line: "{{ ssh_pub_key }}"
+    path: /home/ghost/.ssh/authorized_keys
+    state: present
+
+- name: install ghost-cli using npm
+  npm:
+    name: ghost-cli
+    state: present
+    global: yes
+
+- name: create ghost path
+  file:
+    name: /var/www/ghost
+    state: directory
+    owner: zozo
+    group: zozo
+    mode: 0755

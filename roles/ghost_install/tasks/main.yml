@@ -1,0 +1,22 @@
+---
+- name: install ghost
+  shell: cd /var/www/ghost && ghost install local
+  register: ghost
+
+- name: copy config file
+  template:
+    src: config.production.json.j2
+    dest: /var/www/ghost/config.production.json
+    owner: zozo
+    group: zozo
+
+- name: removing development config file
+  file:
+    path: /var/www/ghost/config.development.json
+    state: absent
+
+- name: running database migration
+  shell: cd /var/www/ghost/ && ghost setup migration
+
+- name: create ghost systemd
+  shell: cd /var/www/ghost/ && ghost setup systemd
