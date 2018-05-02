@@ -1,2 +1,7 @@
 ---
 ssh_pub_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDdwhCH2AbsLCtuNTfNV1lf2MEwbiokyc5xBYhrkrKr0QdMBUT2rkH1li88BHWBbcyEINB9jEbiq3uhEGFa2YIUzzC+IrAGp6O3+NvkCTmVdNqN8dJWTBJMomqzforr5s+cI37dfs1HkPJtRMHXaFpehp3TrqLnwYQRqMLGQQAsvlN/ku7kn+YAgp6y6s0Jli/ndPL3jxwoY/z7LE9mmv0ybbHizhx69DGksGq5TNA6+Gdmy+jK4h5g7ZNA0XvovVLAyXbUZ5hx+af2clLWRPpRqag9up+nF0dur2rQ5jbfODomtKW0Btud/L6huMpKqDfZcfAL39yc3DwnQccSnr64YmygFkEdcXYBR91Aeai14bYyFUho6jw+qwtTH8Myo2bVWatG2sDaVpu3JFFGCDWOkXenFoOqAz6nKf7/vZGraJbKPvXAtfEnZLKvTKi4AJW68bOLUVqhz6Xca8ZRBHW35Y2u/enzBidgKbjIQH/ATr4k1G7VBc0aES/vlHebD//mndVk0wejEIvpyy1JKAaPtapmGWLOr6ybTDvISh5fuL/svM4NWwEtRAkROBOY9Uo6M/TD7apjm7JXFSp7CYTFkm1xkK7ABXdehsimkX/dnmNdkLV286/MlXqMNtUalhqMzxGFHddPtHSN640NVLW/7laVy2/yIDeZ46R+LhPFmQ== peter"
+
+url: "https://startech-md.tk"
+ghost_port: "2368"
+mysql_db_host: "10.160.125.69"
+mysql_user: "root"

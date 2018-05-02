@@ -1,4 +1,9 @@
 ---
+- include_vars: secrets.yml
+
+- name: make sure ghost is not installed before running install
+  shell: cd /var/www/ghost && ghost uninstall --force --no-prompt && rm -rf .ghost*
+
 - name: install ghost
   shell: cd /var/www/ghost && ghost install local
   register: ghost

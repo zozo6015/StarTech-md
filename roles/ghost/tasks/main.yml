@@ -1,7 +1,7 @@
 ---
 - name: install apt-transport-https, sudo
   apt:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
     update_cache: yes
   with_items:
@@ -16,7 +16,7 @@
 
 - name: adding nodejs apt_repository
   apt_repository:
-    repo: deb https://deb.nodesource.com/node_8.x {{ ansible_lsb.codename }} main
+    repo: "deb https://deb.nodesource.com/node_8.x {{ ansible_lsb.codename }} main"
     filename: nodesource
     state: present
 
@@ -24,15 +24,26 @@
   apt:
     name: nodejs
     state: present
-- name: generate user password
-  shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
-  register: newpass
 
-- debug: msg: "The new generated password for login user is: {{ newpass.stdout }}"
+- name: check if zozo user home exist
+  stat:
+    path: /home/zozo
+  register: zozo_home
+
+- name: generate user password
+  local_action: shell openssl rand -base64 32
+  register: newpass
+  run_once: true
+  when: zozo_home.stat.exists == False
+
+- debug:
+    msg: "The new generated password is {{ newpass.stdout }}"
+  when: zozo_home.stat.exists == False
 
 - name: get encrypted version of generated password
-  shell: mkpasswd -m sha-512 -s {{ newpass.stdout }}
+  shell: mkpasswd -m sha-512 -s "{{ newpass.stdout }}"
   register: enc_pass
+  when: zozo_home.stat.exists == False
 
 - name: create ghost account
   user:
@@ -40,7 +51,8 @@
     comment: Keresztes Peter-Zoltan
     shell: /bin/bash
     groups: sudo
-    password: {{ enc_pass.stdout }}
+    password: "{{ enc_pass.stdout }}"
+  when: zozo_home.stat.exists == False
 
 - name: create .ssh folder under the ghost account
   file:
@@ -61,7 +73,7 @@
 - name: copy ssh-keys inside the authorized_keys
   lineinfile:
     line: "{{ ssh_pub_key }}"
-    path: /home/ghost/.ssh/authorized_keys
+    path: /home/zozo/.ssh/authorized_keys
     state: present
 
 - name: install ghost-cli using npm

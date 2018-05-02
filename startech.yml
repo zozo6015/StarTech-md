@@ -9,7 +9,7 @@
   roles:
     - ghost
 
-#- hosts: backend
-#  user: root
-#  become: yes
-#  become_user: ghost
+- hosts: backend
+  user: zozo
+  roles:
+    - ghost_install

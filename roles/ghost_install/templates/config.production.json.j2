@@ -2,7 +2,7 @@
   "url": "{{ url }}",
   "server": {
     "port": {{ ghost_port }},
-    "host": "127.0.0.1"
+    "host": "{{ ansible_default_ipv4.address }}"
   },
   "database": {
     "client": "mysql",
