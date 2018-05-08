@@ -8,6 +8,7 @@
     - apt-transport-https
     - sudo
     - whois
+    - s3fs
 
 - name: adding nodejs apt-key
   apt_key:
@@ -86,7 +87,7 @@
 
 - name: create ghost path
   file:
-    name: /var/www/ghost
+    name: "{{ ghost_path }}"
     state: directory
     owner: zozo
     group: zozo

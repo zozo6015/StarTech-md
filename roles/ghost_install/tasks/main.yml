@@ -11,7 +11,7 @@
 
 - name: make sure ghost is not installed before running install
   file:
-    name: /var/www/ghost
+    name: "{{ ghost_path }}"
     state: absent
     owner: zozo
     group: zozo
@@ -20,23 +20,25 @@
 
 - name: make sure ghost path exists
   file:
-    name: /var/www/ghost
+    name: "{{ ghost_path }}"
     state: directory
     owner: zozo
     group: zozo
     mode: 0755
 
 - name: install ghost
-  shell: cd /var/www/ghost && ghost install --url {{ url }} --ip 0.0.0.0 --db mysql --dbhost {{ mysql_db_host }} --dbuser {{ mysql_user }} --dbpass {{ mysql_pass }} --dbname {{ mysql_db }} --no-prompt --no-stack
+  shell: cd {{ ghost_path }} && ghost install --url {{ url }} --ip 0.0.0.0 --db mysql --dbhost {{ mysql_db_host }} --dbuser {{ mysql_user }} --dbpass {{ mysql_pass }} --dbname {{ mysql_db }} --no-prompt --no-stack
   register: ghost
   ignore_errors: true
 
 - debug: var=ghost
 
-- name: start ghost service
+- name: enable ghost service
   systemd:
     name: ghost_anytech-rd-tk
-    state: started
     daemon_reload: yes
     enabled: true
   become: yes
+
+- name: start ghost service
+  shell: systemctl is-active ghost_anytech-rd-tk.service
