@@ -23,6 +23,7 @@
 
 - name: merge the certificates into one
   shell: cd /etc/letsencrypt/live/{{ domain }} && cat fullchain.pem privkey.pem > {{ domain }}.pem
+
 - name: configure haproxy
   template:
     src: haproxy.cfg.j2

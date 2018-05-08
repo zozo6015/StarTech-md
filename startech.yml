@@ -1,4 +1,8 @@
 ---
+- hosts: backend
+  tasks:
+    []
+
 - hosts: haproxy
   user: root
   roles:
