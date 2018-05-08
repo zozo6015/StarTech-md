@@ -13,6 +13,7 @@
     state: latest
   with_items:
     - pip
+    - pyopenssl
     - certbot
 
 - name: stop http/https services
@@ -31,6 +32,7 @@
   shell: certbot certonly --standalone -n --redirect --rsa-key-size 4096 --agree-tos -m zozo@z0z0.tk -d {{ domain }} --hsts --uir
   register: letsencrypt
   when: certificates.stat.exists == False
+  ignore_errors: true
 
 - debug: var=letsencrypt
   when: certificates.stat.exists == False

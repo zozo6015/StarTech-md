@@ -16,34 +16,30 @@
 
 - name: adding nodejs apt_repository
   apt_repository:
-    repo: "deb https://deb.nodesource.com/node_8.x {{ ansible_lsb.codename }} main"
+    repo: "deb https://deb.nodesource.com/node_8.x {{ ansible_distribution_release }} main"
     filename: nodesource
     state: present
 
 - name: install nodejs
   apt:
-    name: nodejs
+    name: "{{ item }}"
     state: present
-
-- name: check if zozo user home exist
-  stat:
-    path: /home/zozo
-  register: zozo_home
+  with_items:
+    - nodejs
+    - sudo
 
 - name: generate user password
   local_action: shell openssl rand -base64 32
   register: newpass
   run_once: true
-  when: zozo_home.stat.exists == False
 
 - debug:
     msg: "The new generated password is {{ newpass.stdout }}"
-  when: zozo_home.stat.exists == False
+  run_once: true
 
 - name: get encrypted version of generated password
   shell: mkpasswd -m sha-512 -s "{{ newpass.stdout }}"
   register: enc_pass
-  when: zozo_home.stat.exists == False
 
 - name: create ghost account
   user:
@@ -52,7 +48,6 @@
     shell: /bin/bash
     groups: sudo
     password: "{{ enc_pass.stdout }}"
-  when: zozo_home.stat.exists == False
 
 - name: create .ssh folder under the ghost account
   file:
@@ -76,11 +71,18 @@
     path: /home/zozo/.ssh/authorized_keys
     state: present
 
+- name: make sure zozo user has passwordless sudo access
+  lineinfile:
+    path: /etc/sudoers
+    line: 'zozo ALL=(ALL:ALL) NOPASSWD: ALL'
+
 - name: install ghost-cli using npm
   npm:
     name: ghost-cli
     state: present
     global: yes
+  with_items:
+    - ghost-cli
 
 - name: create ghost path
   file:

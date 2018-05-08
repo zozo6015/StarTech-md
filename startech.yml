@@ -1,8 +1,4 @@
 ---
-- hosts: backend
-  tasks:
-    []
-
 - hosts: haproxy
   user: root
   roles:
@@ -13,6 +9,11 @@
   user: root
   roles:
     - ghost
+
+- hosts: mysql
+  user: root
+  roles:
+    - create_db
 
 - hosts: backend
   user: zozo

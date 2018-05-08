@@ -1,27 +1,42 @@
 ---
 - include_vars: secrets.yml
 
-- name: make sure ghost is not installed before running install
-  shell: cd /var/www/ghost && ghost uninstall --force --no-prompt && rm -rf .ghost*
-
-- name: install ghost
-  shell: cd /var/www/ghost && ghost install local
-  register: ghost
-
-- name: copy config file
+- name: Generate hosts file
   template:
-    src: config.production.json.j2
-    dest: /var/www/ghost/config.production.json
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+  become: yes
+
+- name: make sure ghost is not installed before running install
+  file:
+    name: /var/www/ghost
+    state: absent
     owner: zozo
     group: zozo
+    mode: 0755
+  ignore_errors: true
 
-- name: removing development config file
+- name: make sure ghost path exists
   file:
-    path: /var/www/ghost/config.development.json
-    state: absent
+    name: /var/www/ghost
+    state: directory
+    owner: zozo
+    group: zozo
+    mode: 0755
 
-- name: running database migration
-  shell: cd /var/www/ghost/ && ghost setup migration
+- name: install ghost
+  shell: cd /var/www/ghost && ghost install --url {{ url }} --ip 0.0.0.0 --db mysql --dbhost {{ mysql_db_host }} --dbuser {{ mysql_user }} --dbpass {{ mysql_pass }} --dbname {{ mysql_db }} --no-prompt --no-stack
+  register: ghost
+  ignore_errors: true
 
-- name: create ghost systemd
-  shell: cd /var/www/ghost/ && ghost setup systemd
+- debug: var=ghost
+
+- name: start ghost service
+  systemd:
+    name: ghost_anytech-rd-tk
+    state: started
+    daemon_reload: yes
+    enabled: true
+  become: yes

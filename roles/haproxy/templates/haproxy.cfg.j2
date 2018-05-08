@@ -51,7 +51,7 @@ frontend http-in
 frontend https-in
 	bind {{ ansible_default_ipv4.address }}:443 ssl crt /etc/letsencrypt/live/{{ domain }}/{{ domain }}.pem
         http-response set-header strict-transport-security "max-age=31536000; includeSubDomains"
-        http-response set-header Content-Security-Policy "default-src 'self' wss: https: *.{{ domain }}/*; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data:; font-src 'self' https:"
+        http-response set-header Content-Security-Policy "default-src 'self' wss: https: *.{{ domain }}/*; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.jquery.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https://casper.ghost.org/ data:; font-src 'self' https:"
         {# http-response set-header x-frame-options "SAMEORIGIN" if !is_embedded #}
         http-response set-header X-XSS-Protection "1; mode=block"
         http-response set-header X-Content-Type-Options "nosniff"

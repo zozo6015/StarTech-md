@@ -18,7 +18,7 @@
     default_release: jessie-backports
 
 - name: Install certificates
-  include_role:
+  import_role:
     name:  letsencrypt
 
 - name: merge the certificates into one
@@ -30,4 +30,9 @@
     dest: /etc/haproxy/haproxy.cfg
     owner: root
     group: root
-  notify: Restart haproxy
+
+- name: Starting haproxy
+  systemd:
+    name: haproxy
+    state: started
+    enabled: yes

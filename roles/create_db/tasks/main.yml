@@ -1,0 +1,16 @@
+---
+- include_vars: roles/ghost_install/vars/secrets.yml
+
+- name: install MySQL-python
+  apt:
+    name: python-mysqldb
+    state: present
+    update_cache: yes
+
+- name: create startech-rd database
+  mysql_db:
+    name: "{{ mysql_db }}"
+    state: present
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_pass }}"
+    login_host: "{{ mysql_db_host }}"
