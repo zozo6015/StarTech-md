@@ -8,7 +8,6 @@
     - apt-transport-https
     - sudo
     - whois
-    - s3fs
 
 - name: adding nodejs apt-key
   apt_key:

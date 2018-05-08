@@ -1,11 +1,13 @@
 ---
 - hosts: haproxy
+  gather_facts: true
   user: root
   roles:
     - firewall
     - haproxy
 
 - hosts: backend
+  gather_facts: true
   user: root
   roles:
     - ghost
