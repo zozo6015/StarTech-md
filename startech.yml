@@ -2,6 +2,7 @@
 - hosts: haproxy
   user: root
   roles:
+    - firewall
     - haproxy
 
 - hosts: backend

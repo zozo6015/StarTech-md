@@ -1,0 +1,6 @@
+---
+- name: start iptables-persistent
+  systemd:
+    name: iptables-persistent
+    enabled: yes
+    state: restarted

@@ -1,6 +1,6 @@
 ---
-- name: start iptables-persistent
+- name: Restart haproxy
   systemd:
-    name: iptables-persistent
-    enabled: yes
+    name: haproxy
     state: restarted
+    enabled: yes

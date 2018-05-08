@@ -1,0 +1,36 @@
+---
+- name: install certbot
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - python-pip
+
+- name: install python modules required via pip
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - pip
+    - certbot
+
+- name: stop http/https services
+  systemd:
+    name: haproxy
+    state: stopped
+    enabled: yes
+
+- name: check if certificates exist
+  stat:
+    path: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
+    get_checksum: no
+  register: certificates
+
+- name: create letsencrypt certificates
+  shell: certbot certonly --standalone -n --redirect --rsa-key-size 4096 --agree-tos -m zozo@z0z0.tk -d {{ domain }} --hsts --uir
+  register: letsencrypt
+  when: certificates.stat.exists == False
+
+- debug: var=letsencrypt
+  when: certificates.stat.exists == False
