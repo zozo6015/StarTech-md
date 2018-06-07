@@ -29,4 +29,4 @@ RUN   sed -i 's/listen.*/listen\ =\ 0.0.0.0:9000/' /etc/php/7.0/fpm/pool.d/www.c
 
 WORKDIR   /root
 
-EXEC ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F"]
+CMD   ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F"]
