@@ -30,4 +30,6 @@ RUN   sed -i 's/log_level.*/log_level\ =\ debug/' /etc/php/7.0/fpm/php-fpm.conf
 
 WORKDIR   /root
 
+EXPOSE  9000
+
 CMD   ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F"]
