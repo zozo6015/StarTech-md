@@ -25,8 +25,8 @@ RUN   apt -y install php7.0 \
 
 RUN   mkdir -p /run/php
 
-RUN   sed -i 's/listen.*/listen\ =\ 0.0.0.0:9000/' /etc/php/7.0/fpm/pool.d/www.conf \
-      sed -i 's/log_level.*/log_level\ =\ debug/' /etc/php/7.0/fpm/php-fpm.conf
+RUN   sed -i 's/listen.*/listen\ =\ 0.0.0.0:9000/' /etc/php/7.0/fpm/pool.d/www.conf
+RUN   sed -i 's/log_level.*/log_level\ =\ debug/' /etc/php/7.0/fpm/php-fpm.conf
 
 WORKDIR   /root
 
