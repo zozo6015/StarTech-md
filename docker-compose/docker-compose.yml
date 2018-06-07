@@ -29,7 +29,7 @@ services:
       MYSQL_PASSWORD: wp_password
 
   php:
-    image: busterm/php7.2-fpm
+    image: php:fpm
     hostname: php.startech-rd.tk
     restart: always
     volumes:
