@@ -20,7 +20,8 @@ RUN   apt -y install php7.0 \
                          php7.0-tidy \
                          php7.0-xml \
                          php7.0-xmlrpc \
-                         php7.0-zip
+                         php7.0-zip \
+                         sed
 
 RUN   mkdir -p /run/php
 
