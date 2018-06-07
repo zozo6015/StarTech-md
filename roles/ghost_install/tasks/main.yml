@@ -33,12 +33,12 @@
 
 - debug: var=ghost
 
-- name: enable ghost service
-  systemd:
-    name: ghost_anytech-rd-tk
-    daemon_reload: yes
-    enabled: true
-  become: yes
+- name: remove dots from domain name
+  shell: echo {{ domain }} | sed 's/\./-/g'
+  register: service
 
 - name: start ghost service
-  shell: systemctl is-active ghost_anytech-rd-tk.service
+  shell: systemctl start ghost_{{ service.stdout }}.service
+
+- name: enable start at boot time
+  shell: systemctl enable ghost_{{ service.stdout }}.service
