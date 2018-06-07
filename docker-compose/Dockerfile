@@ -34,4 +34,4 @@ WORKDIR   /root
 
 EXPOSE  9000
 
-CMD   ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F"]
+CMD   ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F", ";", "nginx", "-c", "/etc/nginx/nginx.conf", "-g", "'daemon off;'"]
