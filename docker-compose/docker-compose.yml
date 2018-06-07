@@ -29,7 +29,7 @@ services:
       MYSQL_PASSWORD: wp_password
 
   php:
-    image: php:fpm
+    image: zozo6015/startech-md:latest
     hostname: php.startech-rd.tk
     restart: always
     volumes:
