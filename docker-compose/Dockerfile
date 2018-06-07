@@ -2,7 +2,9 @@ FROM debian:9
 MAINTAINER  "Keresztes Péter-Zoltán"
 USER root
 
-RUN   apt-get -y install php7.0 \
+RUN   apt update
+
+RUN   apt -y install php7.0 \
                          php7.0-bcmath \
                          php7.0-bz \
                          php7.0-cli \
