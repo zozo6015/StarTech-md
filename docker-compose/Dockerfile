@@ -1,8 +1,10 @@
-FROM debian:9
+FROM nginx:latest
 MAINTAINER  "StarTech-RD"
 USER root
 
 RUN   apt update
+
+RUN   apt -y upgrade
 
 RUN   apt -y install php7.0 \
                          php7.0-bcmath \
