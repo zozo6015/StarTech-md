@@ -1,5 +1,5 @@
 FROM debian:9
-MAINTAINER  "Keresztes Péter-Zoltán"
+MAINTAINER  "StarTech-RD"
 USER root
 
 RUN   apt update
