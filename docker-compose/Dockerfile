@@ -25,6 +25,6 @@ RUN   mkdir -p /run/php
 RUN   sed -i 's/listen.*/listen\ =\ 0.0.0.0:9000/' /etc/php/7.0/fpm/pool.d/www.conf \
       sed -i 's/log_level.*/log_level\ =\ debug/' /etc/php/7.0/fpm/php-fpm.conf
 
-PWD   /root
+PATH   /root
 
 EXEC ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F"]
