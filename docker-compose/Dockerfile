@@ -6,9 +6,6 @@ RUN   apt update
 
 RUN   apt -y upgrade
 
-RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-      apt install -y nodejs npm
-
 RUN   apt -y install php7.0 \
                          php7.0-bcmath \
                          php7.0-bz \
@@ -26,7 +23,13 @@ RUN   apt -y install php7.0 \
                          php7.0-xml \
                          php7.0-xmlrpc \
                          php7.0-zip \
-                         sed
+                         sed \
+                         curl \
+                         gnupg2
+
+RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+                               apt install -y nodejs
+
 
 RUN   npm install pm2@latest -g
 
