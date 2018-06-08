@@ -37,7 +37,7 @@ RUN   mkdir -p /run/php
 
 WORKDIR   /root
 
-ADD   apps.yaml /opt/apps.yaml
+ADD   ./nginx/apps.yaml /opt/apps.yaml
 
 EXPOSE 80
 
