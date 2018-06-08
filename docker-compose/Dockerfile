@@ -33,9 +33,9 @@ RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 
 RUN   npm install pm2@latest -g
 
-RUN   mkdir -p /run/php && \
-      rm /run/php/php7.0-fpm.sock
-      
+RUN   mkdir -p /run/php
+RUN      rm /run/php/php7.0-fpm.sock
+
 RUN   mkdir -p /var/log/nginx
 
 RUN   sed -i 's/^user.*/user\ =\ nginx' /etc/php/7.0/fpm/pool.d/www.conf
