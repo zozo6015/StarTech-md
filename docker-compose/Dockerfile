@@ -6,6 +6,9 @@ RUN   apt update
 
 RUN   apt -y upgrade
 
+RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+      apt install -y nodejs
+
 RUN   apt -y install php7.0 \
                          php7.0-bcmath \
                          php7.0-bz \
@@ -25,13 +28,14 @@ RUN   apt -y install php7.0 \
                          php7.0-zip \
                          sed
 
-RUN   mkdir -p /run/php
+RUN   npm install pm2@latest -g
 
-#RUN   sed -i 's/^listen.*/listen\ =\ 0.0.0.0:9000/' /etc/php/7.0/fpm/pool.d/www.conf
-RUN   sed -i 's/^log_level.*/log_level\ =\ debug/' /etc/php/7.0/fpm/php-fpm.conf
+RUN   mkdir -p /run/php
 
 WORKDIR   /root
 
-EXPOSE  9000
+ADD   apps.yaml /opt/apps.yaml
 
-CMD   ["/usr/sbin/php-fpm7.0", "-c", "/etc/php/7.0/fpm/php.ini", "-y", "/etc/php/7.0/fpm/php-fpm.conf", "-F", ";", "nginx", "-c", "/etc/nginx/nginx.conf", "-g", "'daemon off;'"]
+EXPOSE 80
+
+CMD   ["/usr/local/bin/pm2", "start", "/opt/apps.yaml", "--no-daemon"]

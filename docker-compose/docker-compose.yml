@@ -3,8 +3,7 @@ services:
   web:
     depends_on:
       - db
-      - php
-    image: nginx:latest
+    image: zozo6015/startech-md:latest
     hostname: wp.startech-rd.tk
     ports:
       - "80:80"
@@ -15,7 +14,6 @@ services:
       - ./nginx/wp.startech-rd.tk.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./wp:/usr/share/nginx/html:rw
-      - /run/php/php7.0-fpm.sock:/run/php/php7.0-fpm.sock:rw
 
   db:
     image: percona:5.7
@@ -28,13 +26,3 @@ services:
       MYSQL_DATABASE: wp
       MYSQL_USER: wp_user
       MYSQL_PASSWORD: wp_password
-
-  php:
-    image: zozo6015/startech-md:latest
-    hostname: php.startech-rd.tk
-    restart: always
-    volumes:
-      - ./nginx/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - /run/php/php7.0-fpm.sock:/run/php/php7.0-fpm.sock:rw
-    expose:
-      - 9000
