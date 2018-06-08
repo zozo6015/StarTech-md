@@ -1,5 +1,5 @@
 apps:
-  - script    : usr/sbin/php-fpm7.0 -c /etc/php/7.0/fpm/php.ini -y /etc/php/7.0/fpm/php-fpm.conf -F
+  - script    : /usr/sbin/php-fpm7.0 -c /etc/php/7.0/fpm/php.ini -y /etc/php/7.0/fpm/php-fpm.conf -F
     name      : 'php-fpm'
     watch     : true
   - script    : nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
