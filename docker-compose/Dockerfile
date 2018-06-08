@@ -7,7 +7,7 @@ RUN   apt update
 RUN   apt -y upgrade
 
 RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-      apt install -y nodejs
+      apt install -y nodejs npm
 
 RUN   apt -y install php7.0 \
                          php7.0-bcmath \
