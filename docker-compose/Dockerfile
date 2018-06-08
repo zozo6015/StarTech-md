@@ -33,7 +33,8 @@ RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 
 RUN   npm install pm2@latest -g
 
-RUN   mkdir -p /run/php
+RUN   mkdir -p /run/php && \
+      rm /run/php/php7.0-fpm.sock
 
 WORKDIR   /root
 
