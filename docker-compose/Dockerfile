@@ -35,8 +35,8 @@ RUN   npm install pm2@latest -g
 
 RUN   mkdir -p /run/php && \
       rm /run/php/php7.0-fpm.sock && \
-      mkdir -p /var/log/nginx/ && \
-      chown -R nginx.nginx /var/log/nginx
+      mkdir -p /var/log/nginx
+
 RUN   sed -i 's/^user.*/user\ =\ nginx' /etc/php/7.0/fpm/pool.d/www.conf
 RUN   sed -i 's/^group.*/group\ =\ nginx' /etc/php/7.0/fpm/pool.d/www.conf
 RUN   sed -i 's/^listen.owner.*/listen.owner\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
