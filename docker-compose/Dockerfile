@@ -1,12 +1,15 @@
-FROM nginx:latest
+FROM debian:9
 MAINTAINER  "StarTech-RD"
 USER root
 
-RUN   apt update
+RUN   wget http://nginx.org/keys/nginx_signing.key -O - | apt-key add -
 
-RUN   apt -y upgrade
+RUN   echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list && \
+      echo "deb-src http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list
 
-RUN   apt -y install php7.0 \
+RUN   apt update && \
+      apt -y upgrade && \
+      apt -y install php7.0 \
                          php7.0-bcmath \
                          php7.0-bz \
                          php7.0-cli \
@@ -25,7 +28,8 @@ RUN   apt -y install php7.0 \
                          php7.0-zip \
                          sed \
                          curl \
-                         gnupg2
+                         gnupg2 \
+                         nginx
 
 RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
                                apt install -y nodejs
@@ -38,10 +42,10 @@ RUN   rm -rf /run/php/*
 
 RUN   mkdir -p /var/log/nginx
 
-RUN   sed -i 's/^user.*/user\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
-RUN   sed -i 's/^group.*/group\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
-RUN   sed -i 's/^listen.owner.*/listen.owner\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
-RUN   sed -i 's/^listen.group.*/listen.group\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
+RUN   sed -i 's/^user.*/user\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf && \
+      sed -i 's/^group.*/group\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf && \
+      sed -i 's/^listen.owner.*/listen.owner\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf && \
+      sed -i 's/^listen.group.*/listen.group\ =\ nginx/' /etc/php/7.0/fpm/pool.d/www.conf
 
 WORKDIR   /root
 
