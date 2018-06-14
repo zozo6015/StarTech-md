@@ -7,7 +7,7 @@ RUN   apt update && apt install -y curl procps net-tools gnupg2
 RUN   curl http://nginx.org/keys/nginx_signing.key -o - | apt-key add -
 
 RUN   echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list && \
-      echo "deb-src http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list
+      echo "deb-src http://nginx.org/packages/mainline/debian/ stretch nginx" | tee -a /etc/apt/sources.list.d/nginx.list
 
 RUN   apt update && \
       apt -y upgrade && \
