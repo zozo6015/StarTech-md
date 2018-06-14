@@ -54,4 +54,4 @@ ADD   ./nginx/apps.yaml /opt/apps.yaml
 
 EXPOSE 80
 
-ENTRYPOINT   ["pm2", "start", "/opt/apps.yaml", "--no-daemon"]
+#ENTRYPOINT   ["pm2", "start", "/opt/apps.yaml", "--no-daemon"]
