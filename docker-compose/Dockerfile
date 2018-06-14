@@ -2,7 +2,7 @@ FROM debian:9
 MAINTAINER  "StarTech-RD"
 USER root
 
-RUN   apt update && apt install -y curl procps net-tools
+RUN   apt update && apt install -y curl procps net-tools gnupg2
 
 RUN   curl http://nginx.org/keys/nginx_signing.key -o - | apt-key add -
 
@@ -30,7 +30,6 @@ RUN   apt update && \
                          php7.0-zip \
                          sed \
                          curl \
-                         gnupg2 \
                          nginx
 
 RUN   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
