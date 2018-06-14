@@ -54,4 +54,5 @@ ADD   ./nginx/apps.yaml /opt/apps.yaml
 
 EXPOSE 80
 
+CMD ["tail", "-f", "/var/log/syslog"]
 #ENTRYPOINT   ["pm2", "start", "/opt/apps.yaml", "--no-daemon"]
