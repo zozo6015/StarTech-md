@@ -2,7 +2,9 @@ FROM debian:9
 MAINTAINER  "StarTech-RD"
 USER root
 
-RUN   wget http://nginx.org/keys/nginx_signing.key -O - | apt-key add -
+RUN   apt update && apt install -y curl procps net-tools
+
+RUN   curl http://nginx.org/keys/nginx_signing.key -o - | apt-key add -
 
 RUN   echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list && \
       echo "deb-src http://nginx.org/packages/mainline/debian/ stretch nginx" | tee /etc/apt/sources.list.d/nginx.list
