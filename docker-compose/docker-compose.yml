@@ -3,7 +3,7 @@ services:
   web:
     depends_on:
       - db
-    image: zozo6015/startech-md:latest
+    image: richarvey/nginx-php-fpm 
     hostname: wp.startech-rd.tk
     ports:
       - "80:80"
